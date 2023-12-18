@@ -36,21 +36,24 @@ def makeWidgets():
         # The entries dictionary is a dictionary that maps the field names to the Entry widgets.  The key is the field name and the value is the Entry widget text box.
         #  For example, in the first iteration, we are adding the key 'key' and the value ent to the entries dictionary.  In the second iteration, we are adding the key 'name' and the value ent to the entries dictionary.  And so on in effect making a new dictionary out of our initial key/value pair from enumerate.
         entries[label] = ent
-    #  Each of these buttons calls a function according to the command parameter.  The command parameter is a function object.  The function object is called when the button is clicked.
+    #  Each of these buttons calls a function according to the command parameter.  The command parameter is a function object.  The function object is called when the button is clicked.  We are also specifying alignment information for the buttons.
     Button(window, text="Fetch",  command=fetchRecord).pack(side=LEFT)
     Button(window, text="Update", command=updateRecord).pack(side=LEFT)
-    print(entries)
     Button(window, text="Quit",   command=window.quit).pack(side=RIGHT)
     return window
 
 def fetchRecord():
+    # This function gets the value of the literal 'key' in the entries dictionary.  If we have a record with that key in the db dictionary, we assign the value of that record to the record variable.  If we don't have a record with that key, we show an error message.
     key = entries['key'].get()
     try:
+        #  Here we check to see if the key is in the db dictionary (this dictionary is our shelve object which represents our persistance layer).  If it is we get the value of the key and assign it to record.  If it isn't we show an error message.
         record = db[key]                      # fetch by key, show in GUI
     except:
         showerror(title='Error', message='No such key!')
     else:
+        # In this loop, we are iterating over the fieldnames tuple.  For each fieldname using field, we are deleting any entry with that name first, and then inserting the key value pair from the record dictionary into the entry widget.
         for field in fieldnames:
+            
             entries[field].delete(0, END)
             entries[field].insert(0, repr(getattr(record, field)))
 
@@ -59,7 +62,7 @@ def updateRecord():
     if key in db:
         record = db[key]                      # update existing record
     else:
-        from person import Person             # make/store new one for key
+        from person_alternative import Person             # make/store new one for key
         record = Person(name='?', age='?')    # eval: strings must be quoted
     for field in fieldnames:
         setattr(record, field, eval(entries[field].get()))
