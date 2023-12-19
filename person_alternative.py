@@ -38,3 +38,4 @@ if __name__ == '__main__':
     for obj in (bob, sue, tom):
         obj.giveRaise(.10)                 # run this obj's giveRaise
         print(obj)                         # run common __str__ method
+
