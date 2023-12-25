@@ -12,7 +12,7 @@ fieldnames = ('name', 'age', 'job', 'pay')    #  Tupel of values which shouldnt 
 ###  HTML    ####
 
 form = cgi.FieldStorage()
-# parse form data.  Note the object created from the FieldStorage call acts like a dict in many ways, allowing you to use .keys for example to get all the vars that were sent to the program.  I need to print this out to see what the object is
+# parse form data.  Note the object created from the FieldStorage call acts like a dict in many ways, allowing you to use .keys for example to get all the vars that were sent to the program.  I printed this and the output was a dict like object
 
 #  print(form.keys())
 print('Content-type: text/html')              # hdr, note that print inserts a newline after each print statement
